@@ -1,101 +1,116 @@
 # ⚖️ Legal RAG Assistant
 
-A Retrieval-Augmented Generation (RAG) application designed to answer legal questions using document-based context. Built using LangChain, Hugging Face Transformers, FAISS, and Streamlit.
+A Retrieval-Augmented Generation (RAG) application that accurately answers legal questions using document-based context. Built with LangChain, Hugging Face Transformers, FAISS, and Streamlit, this tool is ideal for navigating the intricacies of legal agreements with grounded AI responses.
+
+---
 
 ## 📌 Problem Statement
 
 **"Can AI accurately and concisely answer legal questions based only on the contents of legal agreements?"**
 
-Traditional language models may hallucinate answers or rely on general knowledge. This project solves that by grounding the answers strictly in the context of uploaded legal documents using RAG.
+Most AI models hallucinate answers or rely on general knowledge. This project solves that by grounding the responses **strictly in legal documents** via retrieval-augmented generation (RAG).
 
 ---
 
-## 📄 Data Description
+## 📄 Dataset Description
 
-- **Source**: Internal legal documents (e.g., PDF agreements).
-- **Preprocessing**: PDFs are split into text chunks, embedded using `sentence-transformers/all-MiniLM-L6-v2`, and stored in a FAISS vectorstore.
-- **Example Topics**:
-  - Debenture holders and their rights
-  - Liquidation process
+- **Source**: [LexGLUE - LEDGAR dataset](https://huggingface.co/datasets/lex_glue), a public dataset of legal clauses extracted from contracts.
+- **Preprocessing**: Text is chunked and embedded using the `sentence-transformers/all-MiniLM-L6-v2` model, stored in a FAISS vector index.
+- **Topics Covered**:
+  - Rights of debenture holders
+  - Liquidation and insolvency
   - Secured vs. unsecured creditors
+  - Remedies upon company default
 
 ---
 
-## 🧠 Model & Architecture
+## 🧠 Model Architecture
 
-- **Vector Store**: FAISS
-- **Embeddings**: Hugging Face Sentence Transformers
-- **LLM**: `google/flan-t5-base` used via Transformers pipeline
-- **Framework**: LangChain
-- **Frontend**: Streamlit app with user question input, generated answers, and feedback mechanism
+| Component        | Technology Used                        |
+|------------------|----------------------------------------|
+| Embeddings       | `sentence-transformers/all-MiniLM-L6-v2` |
+| Vector Store     | FAISS                                  |
+| LLM              | `google/flan-t5-base`                  |
+| Framework        | LangChain                              |
+| UI               | Streamlit                              |
 
-### Flow:
-1. User submits a legal question.
-2. FAISS retrieves top-k similar document chunks.
-3. LLM uses those chunks to generate a response.
-4. Answer is displayed with an option for user feedback.
+### 🔄 RAG Workflow
+
+1. **User asks a legal question**
+2. **FAISS retrieves** relevant document chunks
+3. **FLAN-T5** uses the retrieved context to generate an answer
+4. **Output shown in Streamlit** with feedback options
 
 ---
 
 ## 🚀 Features
 
-- Ask any legal question based on your uploaded contract PDFs.
-- Retrieves only the most relevant context.
-- Ensures output is grounded, not hallucinated.
-- Accepts user feedback (positive/negative) for evaluation.
+- 🔍 Ask legal questions grounded in contract data
+- 📚 Context retrieved via semantic search
+- ✅ Clear, formal, and document-based answers
+- 📩 Feedback collection with CSV logging
 
 ---
 
-## 🖥️ How to Run Locally
+## 🖥️ Run Locally
 
 ```bash
 # Clone the repository
 git clone https://github.com/ShubhamRSY/gensage.git
 cd gensage
 ```
-# Set up virtual environment and install requirements
+# Create a virtual environment
 python3 -m venv venv
 source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
 
 # Run the Streamlit app
 streamlit run rag_qa_ui.py
 
 
-📁 Folder Structure
-bash
-Copy
-Edit
+📁 Project Structure
+
 gensage/
-├── faiss_index/                # FAISS index built from PDF chunks
-├── feedback_log.csv            # Logged user feedback
-├── rag_qa_ui.py                # Streamlit-based RAG interface
-├── chunk_embed.py              # Script to chunk PDFs and embed them
-├── requirements.txt            # All Python dependencies
-└── README.md                   # This file
-🧪 Sample Questions
-"Is a debenture holder considered a secured creditor during liquidation?"
+├── chunk_embed.py           # Converts PDF/docs into vector chunks
+├── rag_qa_ui.py             # Streamlit app interface
+├── faiss_index/             # Vectorstore with embedded chunks
+├── feedback_log.csv         # User feedback records
+├── requirements.txt         # Dependencies
+└── README.md                # This file
 
-"What remedies does a secured creditor have if a company defaults?"
+🧪 Sample Questions to Try
+Is a debenture holder considered a secured creditor during liquidation?
 
-"Can a company issue both secured and unsecured debentures?"
+What legal remedies are available to a secured creditor if the company defaults?
 
-✅ Status
- Vector search and RAG working
+Can a company issue both secured and unsecured debentures?
 
- Streamlit frontend operational
 
- Feedback system logging to CSV
+✅ Current Status
+✅ Vector search and retrieval working
 
- Uploaded to GitHub
+✅ Streamlit UI with feedback logging
 
-📌 Next Steps
- Improve prompt tuning for more robust answers
+✅ GitHub repo live at: ShubhamRSY/gensage
 
- Deploy on Streamlit Cloud or Hugging Face Spaces
+🌐 Next Steps
+🚀 Deploy to Streamlit Cloud or Hugging Face Spaces
 
- Add multi-query and batch support
+🎯 Prompt tuning for better LLM outputs
 
- Include document upload support in UI
+🔄 Batch question support
+
+📎 File/document upload in UI
+
+📘 Acknowledgments
+Hugging Face Datasets
+
+LangChain
+
+Streamlit
+
+FAISS
 
 
